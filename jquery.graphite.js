@@ -3,7 +3,7 @@
 (function ($) {
     $.fn.graphite = function (options) {
         if (options === "update") {
-            $.fn.graphite.update(this);
+            $.fn.graphite.update(this, arguments[1]);
             return this;
         }
 
@@ -43,8 +43,12 @@
 
     $.fn.graphite.update = function($img, options) {
         options = options || {};
-        var settings = $.extend({}, $img.data("graphOptions"), options);
-        $.fn.graphite.render($img, settings);
+        $img.each(function () {
+            $this = $(this);
+            var settings = $.extend({}, $this.data("graphOptions"), options);
+            $this.data("graphOptions", settings);
+            $.fn.graphite.render($this, settings);
+        });
     };
 
     // Default settings. 
@@ -55,7 +59,7 @@
         height: "300",
         until: "now",
         url: "/render/",
-        width: "940",
+        width: "940"
     };
 
 }(jQuery));
