@@ -3,7 +3,7 @@
 (function ($) {
     $.fn.graphite = function (options) {
         if (options === "update") {
-            $.fn.graphite.update(this);
+            $.fn.graphite.update(this, arguments[1]);
             return this;
         }
 
@@ -23,6 +23,8 @@
     $.fn.graphite.render = function($img, options) {
         // Render a new image. //
         var src = options.url + "?";
+        // use random parameter to force image refresh
+        options['_t'] = Math.random();
         $.each(options, function (key, value) {
             if (key === "target") {
                 $.each(value, function (index, value) {
@@ -41,8 +43,12 @@
 
     $.fn.graphite.update = function($img, options) {
         options = options || {};
-        var settings = $.extend({}, $img.data("graphOptions"), options);
-        $.fn.graphite.render($img, settings);
+        $img.each(function () {
+            $this = $(this);
+            var settings = $.extend({}, $this.data("graphOptions"), options);
+            $this.data("graphOptions", settings);
+            $.fn.graphite.render($this, settings);
+        });
     };
 
     // Default settings. 
@@ -53,7 +59,7 @@
         height: "300",
         until: "now",
         url: "/render/",
-        width: "940",
+        width: "940"
     };
 
 }(jQuery));
