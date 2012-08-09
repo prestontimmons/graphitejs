@@ -23,8 +23,10 @@
     $.fn.graphite.render = function($img, options) {
         // Render a new image. //
         var src = options.url + "?";
+
         // use random parameter to force image refresh
-        options['_t'] = Math.random();
+        options["_t"] = options["_t"] || Math.random();
+
         $.each(options, function (key, value) {
             if (key === "target") {
                 $.each(value, function (index, value) {
