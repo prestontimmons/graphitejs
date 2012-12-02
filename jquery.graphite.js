@@ -12,7 +12,7 @@
         var settings = $.extend({}, $.fn.graphite.defaults, options);
 
         return this.each(function () {
-            $this = $(this);
+            var $this = $(this);
 
             $this.data("graphOptions", settings);
             $.fn.graphite.render($this, settings);
@@ -20,8 +20,7 @@
 
     };
 
-    $.fn.graphite.render = function($img, options) {
-        // Render a new image. //
+    $.fn.graphite.geturl = function(options) {
         var src = options.url + "?";
 
         // use random parameter to force image refresh
@@ -37,8 +36,11 @@
             }
         });
 
-        src = src.replace(/\?&/, "?");
-        $img.attr("src", src);
+        return src.replace(/\?&/, "?");
+    };
+
+    $.fn.graphite.render = function($img, options) {
+        $img.attr("src", $.fn.graphite.geturl(options));
         $img.attr("height", options.height);
         $img.attr("width", options.width);
     };
@@ -46,7 +48,7 @@
     $.fn.graphite.update = function($img, options) {
         options = options || {};
         $img.each(function () {
-            $this = $(this);
+            var $this = $(this);
             var settings = $.extend({}, $this.data("graphOptions"), options);
             $this.data("graphOptions", settings);
             $.fn.graphite.render($this, settings);
