@@ -20,10 +20,12 @@
 
     };
 
-    $.fn.graphite.geturl = function(options) {
-        var src = options.url + "?";
+    $.fn.graphite.geturl = function(rawOptions) {
+        var src = rawOptions.url + "?";
 
         // use random parameter to force image refresh
+        var options = $.extend({}, rawOptions);
+
         options["_t"] = options["_t"] || Math.random();
 
         $.each(options, function (key, value) {
