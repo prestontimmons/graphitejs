@@ -1,7 +1,7 @@
 ## graphite.js
 
-Plugin to easily make graphs and update them on the fly using the 
-[Graphite url api](http://readthedocs.org/docs/graphite/en/latest/url-api.html).
+Plugin to easily make graphs and update them on the fly using 
+[Graphite's Render Url API](http://graphite.readthedocs.org/en/latest/render_api.html).
 
 ## How it works
 
